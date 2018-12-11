@@ -2,19 +2,18 @@
 title: "Supplementary Document 1: metaQuantome tutorial"
 author: "Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap"
 date: "December 3, 2018"
+always_allow_html: yes
+self_contained: false
 output:
-    html_document:
+    github_document:
         toc: true
-        depth: 3
-        number_sections: true
-        theme: united
-        highlight: tango
-        toc_float: true
-        keep_md: true
+        toc_depth: 3
+        fig_width: 5
+        fig_height: 5
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(comment=NA, cache=TRUE)
+knitr::opts_chunk$set(comment = NA, cache= TRUE)
 library(kableExtra)
 library(knitr)
 ```
@@ -155,7 +154,6 @@ Let's look at the output in `mqome_outputs`:
 preview_tab_file('mqome_outputs/tax_expanded.tab')
 ```
 
-<br>
 
 Note that quantitative outputs are included (columns like "NS_mean", which shows the log base 2 of the average intensity for that term), as well as information about the 'quality' of the annotations, like "X733NS_n_peptide", which shows the number of peptides that give evidence for each term. For example, 4 peptides were observed in sample X733NS that were annotated with the *Firmicutes* phylum or any of its children. These extra columns are included because they are used in `metaquantome filter`, and for the sake of transparency.
 
@@ -221,11 +219,14 @@ metaquantome viz \
 ```
 
 ### NS
+```{r}
+print(getwd())
+```
 
-<img src='mqome_outputs/imgs/tax_ns.png'/>
+![](mqome_outputs/imgs/tax_ns.png)
 
 ### WS
-<img src='mqome_outputs/imgs/tax_ws.png'/>
+![](mqome_outputs/imgs/tax_ws.png)
 
 
 # Cluster Analysis of Taxonomy
@@ -247,7 +248,7 @@ metaquantome viz \
 
 The `--calculate_sep` argument tells metaQuantome to calculate the ratio of the between-cluster variance to the within-cluster variance, where higher indicates a better separation of clusters (see the main paper for details). The separation is included in the plot title.
 
-<img src='mqome_outputs/imgs/tax_pca.png'/>
+![](mqome_outputs/imgs/tax_pca.png)
 
 ## Heatmap
 
@@ -261,7 +262,7 @@ metaquantome viz \
     --img mqome_outputs/imgs/tax_heatmap.png
 ```
 
-<img src='mqome_outputs/imgs/tax_heatmap.png'/>
+![](mqome_outputs/imgs/tax_heatmap.png)
 
 
 # Differentially Expressed Functions
@@ -339,7 +340,7 @@ metaquantome viz \
     --img mqome_outputs/imgs/func_dea.png
 ```
 
-<img src='mqome_outputs/imgs/func_dea.png'/>
+![](mqome_outputs/imgs/func_dea.png)
 
 We may also want to see the names specific terms that are differentially expressed. To do this, we provide the name of the column that has the text we want to plot - usually, the `id` column (for function) or `taxon_name` (for taxonomy) to `--textannot`. The plotting program automatically hides some of the terms to avoid overplotting - see `mqome_outputs/func_stat.tab` for the full list of results.
 
@@ -357,7 +358,7 @@ metaquantome viz \
     --textannot id
 ```
 
-<img src='mqome_outputs/imgs/func_dea_text.png'/>
+![](mqome_outputs/imgs/func_dea_text.png)
 
 
 Finally, we may also want to divide the GO terms by ontology - biological process, molecular function, and cellular component. We can do that by providing the flag `--gosplit`. You may also have to tweak the `--width` and `--height` (in inches) to get everything looking right.
@@ -379,7 +380,7 @@ metaquantome viz \
     --height 8
 ```
 
-<img src='mqome_outputs/imgs/func_dea_text_split.png'/>
+![](mqome_outputs/imgs/func_dea_text_split.png)
 
 # Function-Taxonomy Interaction
 
@@ -457,11 +458,11 @@ metaquantome viz \
 ```
 
 ### NS
-<img src='mqome_outputs/imgs/ft_carbo_ns.png'/>
+![](mqome_outputs/imgs/ft_carbo_ns.png)
 
 
 ### WS
-<img src='mqome_outputs/imgs/ft_carbo_ws.png'/>
+![](mqome_outputs/imgs/ft_carbo_ws.png)
 
 # The End
 
