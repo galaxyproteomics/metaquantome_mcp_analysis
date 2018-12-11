@@ -10,6 +10,7 @@ output:
         theme: united
         highlight: tango
         toc_float: true
+        keep_md: true
 ---
 
 ```{r include=FALSE}
