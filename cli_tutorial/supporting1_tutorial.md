@@ -35,7 +35,7 @@ Finally, we can activate the environment using the following command, which will
 source activate mqome
 ```
 
-The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at https://github.com/galaxyproteomics/metaquantome\_mcp\_analysis and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at https://github.com/galaxyproteomics/metaquantome/issues
+The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
 
 The data
 ========
@@ -1592,4 +1592,4 @@ metaquantome viz \
 The End
 =======
 
-Thank you for going through the tutorial! As we mentioned above, use the help flag for full documentation of each command (e.g. `metaquantome expand -h`), and, if you have any problems or questions, submit an issue at https://github.com/galaxyproteomics/metaquantome/issues
+Thank you for going through the tutorial! As we mentioned above, use the help flag for full documentation of each command (e.g. `metaquantome expand -h`), and, if you have any problems or questions, submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
