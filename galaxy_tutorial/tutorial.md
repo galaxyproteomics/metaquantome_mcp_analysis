@@ -26,7 +26,7 @@ In Galaxy, to run any workflow, the appropriate data must be provided to the wor
 ## Running the workflows
 
 Once the files have been imported, these will show up as items in our active history.
-We’re now going to run *Workflows* on the input data. The workflows follow the analyses in the command line tutorial (Supplementary Document 1 of the *Mol Cell Proteomics* manuscript).
+We’re now going to run *Workflows* on the input data. The workflows follow the analyses in the command line tutorial (Supplementary Document 1 of the *Mol Cell Proteomics* manuscript). If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
 
 ### Workflow 1: Most Abundant Taxa
 
