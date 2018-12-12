@@ -3,34 +3,6 @@ Supplementary Document 1: metaQuantome tutorial
 Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap
 December 3, 2018
 
--   [Introduction](#introduction)
--   [Installing metaQuantome](#installing-metaquantome)
--   [The data](#the-data)
-    -   [Function](#function)
-    -   [Taxonomy](#taxonomy)
-    -   [Peptide intensities](#peptide-intensities)
--   [Most Abundant Taxa](#most-abundant-taxa)
-    -   [Expand](#expand)
-    -   [Filter](#filter)
-    -   [Viz](#viz)
-        -   [NS](#ns)
-        -   [WS](#ws)
--   [Cluster Analysis of Taxonomy](#cluster-analysis-of-taxonomy)
-    -   [Principal components analysis](#principal-components-analysis)
-    -   [Heatmap](#heatmap)
--   [Differentially Expressed Functions](#differentially-expressed-functions)
-    -   [Expand](#expand-1)
-    -   [Filter](#filter-1)
-    -   [Stat](#stat)
-    -   [Viz](#viz-1)
--   [Function-Taxonomy Interaction](#function-taxonomy-interaction)
-    -   [Expand](#expand-2)
-    -   [Filter](#filter-2)
-    -   [Viz](#viz-2)
-        -   [NS](#ns-1)
-        -   [WS](#ws-1)
--   [The End](#the-end)
-
 Introduction
 ============
 
@@ -41,7 +13,7 @@ Installing metaQuantome
 
 The easiest way to install metaQuantome with all the dependencies is by using Bioconda (provided you are on Mac or Linux, which are the only systems supported by Bioconda).
 
-First, install the conda package manager, by downloading either Anaconda or Miniconda (links). Then, the following commands will set up the necessary channels for bioconda and metaQuantome.
+First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for bioconda and metaQuantome.
 
 ``` bash
 conda config --add channels defaults
@@ -63,7 +35,7 @@ Finally, we can activate the environment using the following command, which will
 source activate mqome
 ```
 
-The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
+The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at https://github.com/galaxyproteomics/metaquantome\_mcp\_analysis and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at https://github.com/galaxyproteomics/metaquantome/issues
 
 The data
 ========
@@ -107,7 +79,7 @@ go
 LPGQQHGTPSAK
 </td>
 <td style="text-align:left;">
-<GO:0009405,GO:0019867>
+GO:0009405,GO:0019867
 </td>
 </tr>
 <tr>
@@ -115,7 +87,7 @@ LPGQQHGTPSAK
 ELPGLAALTDK
 </td>
 <td style="text-align:left;">
-<GO:0006096,GO:0005737,GO:0004618,GO:0005524>
+GO:0006096,GO:0005737,GO:0004618,GO:0005524
 </td>
 </tr>
 <tr>
@@ -123,7 +95,7 @@ ELPGLAALTDK
 ELADASVSTIEIER
 </td>
 <td style="text-align:left;">
-<GO:0006412,GO:0015935,GO:0003735,GO:0019843,GO:0003729>
+GO:0006412,GO:0015935,GO:0003735,GO:0019843,GO:0003729
 </td>
 </tr>
 <tr>
@@ -131,7 +103,7 @@ ELADASVSTIEIER
 QISAGELR
 </td>
 <td style="text-align:left;">
-<GO:0006412,GO:0005840,GO:0022625,GO:0003735,GO:0003729>
+GO:0006412,GO:0005840,GO:0022625,GO:0003735,GO:0003729
 </td>
 </tr>
 <tr>
@@ -139,7 +111,7 @@ QISAGELR
 VPAILADATK
 </td>
 <td style="text-align:left;">
-<GO:0055085>
+GO:0055085
 </td>
 </tr>
 </tbody>
@@ -1536,7 +1508,7 @@ metaquantome viz \
 Function-Taxonomy Interaction
 =============================
 
-In this analysis, we examine the contribution of each taxon to carbohydrate metabolism, which is denoted by the GO term <GO:0005975>, "carbohydrate metabolic process". Once again, the workflow is `expand` -&gt; `filter`, but now we go straight to `viz` (testing is not recommended in function-taxonomy interaction mode).
+In this analysis, we examine the contribution of each taxon to carbohydrate metabolism, which is denoted by the GO term GO:0005975, "carbohydrate metabolic process". Once again, the workflow is `expand` -&gt; `filter`, but now we go straight to `viz` (testing is not recommended in function-taxonomy interaction mode).
 
 Expand
 ------
@@ -1620,4 +1592,4 @@ metaquantome viz \
 The End
 =======
 
-Thank you for going through the tutorial! As we mentioned above, use the help flag for full documentation of each command (e.g. `metaquantome expand -h`), and, if you have any problems or questions, submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
+Thank you for going through the tutorial! As we mentioned above, use the help flag for full documentation of each command (e.g. `metaquantome expand -h`), and, if you have any problems or questions, submit an issue at https://github.com/galaxyproteomics/metaquantome/issues

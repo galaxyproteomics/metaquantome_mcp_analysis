@@ -2,18 +2,15 @@
 title: "Supplementary Document 1: metaQuantome tutorial"
 author: "Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap"
 date: "December 3, 2018"
-always_allow_html: yes
 self_contained: false
+always_allow_html: yes
 output:
     github_document:
-        toc: true
-        toc_depth: 3
-        fig_width: 5
-        fig_height: 5
+        md_extensions: -autolink_bare_uris
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(comment = NA, cache= TRUE)
+knitr::opts_chunk$set(comment = NA, cache = TRUE)
 library(kableExtra)
 library(knitr)
 ```
@@ -26,7 +23,7 @@ This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 201
 
 The easiest way to install metaQuantome with all the dependencies is by using Bioconda (provided you are on Mac or Linux, which are the only systems supported by Bioconda).
 
-First, install the conda package manager, by downloading either Anaconda or Miniconda (links). Then, the following commands will set up the necessary channels for bioconda and metaQuantome. 
+First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for bioconda and metaQuantome. 
 
 ```bash
 conda config --add channels defaults
