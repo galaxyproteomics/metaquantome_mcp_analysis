@@ -32,7 +32,13 @@ We’re now going to run *Workflows* on the input data. The workflows follow the
 
 The next step is to import the workflow.  There are four workflows for running metaQuantome. The first workflow is the "metaQuantome Workflow 1: Most abundant Taxa". This workflow is used to identify the most abundant taxa in an experiment.
 
-To import this workflow, go to Shared Data &rarr; "Workflows" &rarr; "metaQuantome workflow 1: most abundant taxa". Now, click on Import Workflow [PIC]. Once the workflow is imported, it will now be available in the "Workflow" tab in the Galaxy instance.
+To import this workflow, go to Shared Data &rarr; "Workflows" &rarr; "metaQuantome workflow 1: most abundant taxa". If you don't see this workflow, try searching "metaQuantome" in the search box. 
+
+Now, click on Import Workflow:
+
+![import workflow](images/workflow_import.png)
+
+Once the workflow is imported, it will now be available in the "Workflow" tab in the Galaxy instance.
 
 ![workflow tab](images/workflow_tab.png)
 
