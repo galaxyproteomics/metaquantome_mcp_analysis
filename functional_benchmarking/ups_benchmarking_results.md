@@ -77,7 +77,7 @@ cat('Naive method MSE: ', naive_err)
 ```
 
 ```
-## Naive method MSE:  25.5119
+## Naive method MSE:  26.75425
 ```
 
 ```r
@@ -115,7 +115,7 @@ cat('metaQuantome MSE: ', mqome_err)
 ```
 
 ```
-## metaQuantome MSE:  24.32582
+## metaQuantome MSE:  25.23472
 ```
 
 ```r
@@ -153,12 +153,12 @@ res %>%
   <tr>
    <td style="text-align:left;"> naive </td>
    <td style="text-align:right;"> 712 </td>
-   <td style="text-align:left;"> 25.5118973265345 </td>
+   <td style="text-align:left;"> 26.7542489563297 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> metaquantome </td>
    <td style="text-align:right;"> 1716 </td>
-   <td style="text-align:left;"> 24.3258160575091 </td>
+   <td style="text-align:left;"> 25.2347185710186 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> true </td>
