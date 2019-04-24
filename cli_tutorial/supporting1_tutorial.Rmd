@@ -1,7 +1,7 @@
 ---
-title: "Supplementary Document 1: metaQuantome tutorial"
+title: "metaQuantome Command-line Tutorial"
 author: "Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap"
-date: "December 3, 2018"
+date: "April 19, 2019"
 self_contained: false
 always_allow_html: yes
 output:
@@ -10,20 +10,21 @@ output:
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(comment = NA, cache = TRUE)
+knitr::opts_chunk$set(comment = NA, cache = FALSE)
 library(kableExtra)
 library(knitr)
 ```
 
 # Introduction
 
-This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is provided in Supplementary Document 2: Galaxy tutorial.
+This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is available [here](../galaxy_tutorial/tutorial.md).
 
 # Installing metaQuantome
 
 The easiest way to install metaQuantome with all the dependencies is by using Bioconda (provided you are on Mac or Linux, which are the only systems supported by Bioconda).
 
-First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for bioconda and metaQuantome. 
+First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for Bioconda and metaQuantome. If needed, additional information on Bioconda is available at <https://bioconda.github.io/>.
+
 
 ```bash
 conda config --add channels defaults
@@ -31,13 +32,19 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-Then, run the following command to set up an environment named `mqome`, which will have metaQuantome and all dependencies in it:
+Then, run the following command to set up an environment named `mqome`, which will have metaQuantome (version 1.0.0) and all dependencies in it:
 
 ```bash
-conda create -n mqome metaquantome
+conda create -n mqome metaquantome=1.0.0
 ```
 
-This may take quite a long time (up to an hour), as Bioconda needs to figure out the best packages for your system. However, this command only needs to be run once.
+If the following prompt is seen at the command line, type `y`:
+
+```bash
+Proceeed ([y]/n)?
+```
+
+The `create` command only needs to be run once.
 
 Finally, we can activate the environment using the following command, which will make the `metaquantome` command available. 
 
@@ -45,15 +52,16 @@ Finally, we can activate the environment using the following command, which will
 source activate mqome
 ```
 
-The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
+The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/cli_tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>.
+
 
 # The data
 
-metaQuantome takes 2-3 input files depending on the mode of analysis.In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above.
+metaQuantome takes 2-3 input files depending on the mode of analysis. In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above. In addition, 
 
-In this tutorial, the data is from a previously published paper [1], and is downsampled in the interest of speed and simplicity - so, keep in mind that these results are by not necessarily representative. The purpose of this tutorial is to demonstrate the capabilities of metaQuantome, not to analyze the full dataset. We can see the beginning of each of the files below. I'll be previewing them using an R function, to make them a little prettier:
+In this tutorial, the data is from a previously published paper [1], and is downsampled in the interest of speed and simplicity - so, keep in mind that these results are by not necessarily representative. The purpose of this tutorial is to demonstrate the capabilities of metaQuantome, not to analyze the full dataset. We can see the beginning of each of the files below.
 
-```{r}
+```{r include = FALSE}
 preview_tab_file <- function(file){
   df <- read.delim(file, sep="\t")
   df %>%
@@ -66,7 +74,7 @@ preview_tab_file <- function(file){
 
 ## Function
 
-```{r results='asis'}
+```{r results='asis', echo=FALSE}
 preview_tab_file('input_files/func.tab')
 ```
 
@@ -74,7 +82,7 @@ Note that there can be multiple GO terms (or no GO terms) annotated to a peptide
 
 ## Taxonomy
 
-```{r results='asis'}
+```{r results='asis', echo=FALSE}
 preview_tab_file('input_files/tax.tab')
 ```
 
@@ -82,12 +90,36 @@ Here, the peptides are annotated with their lowest common ancestor as a NCBI tax
 
 ## Peptide intensities
 
-```{r results='asis'}
+Here, the mass-spectrometer spectral intensities are provided for each peptide.
+
+```{r results='asis', echo=FALSE}
 preview_tab_file('input_files/int.tab')
 ```
 
+Note that missing data is here represented as `NA`. In general, metaQuantome treats `0`, `NA`, and `NaN` as missing data.
 
-Now, as detailed in the manuscript, the are several questions that metaQuantome can be used to explore. Let's go through a few of these.
+Also, metaQuantome assumes that input data is untransformed and normalized - that is, the data should be on the original measurement scale (not log transformed or any other transformation), and it should be normalized by an appropriate method.
+
+# Databases
+
+metaQuantome has a separate module for downloading the necessary databases. Let's first get the helptext for the module and make sure everything is installed correctly:
+
+```{bash echo=-1}
+source ~/miniconda3/bin/activate mqome
+metaquantome db -h
+```
+
+If you get any errors that suggest that there has been trouble installing the package, please post on <https://github.com/galaxyproteomics/metaquantome/issues>.
+
+Now, to actually download the databases, choose a folder - here, `data` - and run the following command:
+
+```{bash echo=-1, results=FALSE, cache=FALSE}
+source ~/miniconda3/bin/activate mqome
+mkdir -p ./data
+metaquantome db ncbi go --dir ./data
+```
+
+As detailed in the manuscript, the are several questions that metaQuantome can be used to explore. Let's go through a few of these.
 
 # Most Abundant Taxa
 
@@ -97,7 +129,7 @@ metaQuantome can be used to identify the most abundant taxa in an experiment, an
 2) `filter` the expanded results to well-supported taxa
 3) `viz` the filtered taxa, ranked by abundance.
 
-## Expand 
+## Expand
 
 metaQuantome requires information about each of the samples, and which experimental conditions they belong to. The names of the samples also should be the column names in the intensity file. For example, if you have two experimental conditions "A" and "B", each with two samples that you're calling "A1", "A2", and "B1", "B2", respectively, the columns of your intensity file should be `peptide` (or another peptide column name), `A1`,`A2`,`B1`, and `B2`. Then, the `--samps` argument gives metaQuantome the information about which samples below to which groups. There are two ways to provide this information to metaQuantome:
 
@@ -113,26 +145,16 @@ cat input_files/samples.tab
 The file must have the 'group<tab>colnames` header, and cannot end with a newline. Moreover, it must be separated with 'hard' tabs rather than 'soft tabs', as must all files used by metaQuantome. On the other hand, the JSON option is simpler for a smaller number of samples. The JSON equivalent in this case is
 
 ```
-'{"NS": ["733NS","852NS","866NS"], "WS": ["733WS", "852WS", "866WS"]}'
+'{"NS": ["X733NS","X852NS","X866NS"], "WS": ["X733WS", "X852WS", "X866WS"]}'
 ```
 
 Note that the items in the JSON string must be surrounded by double quotes (e.g., `"thing"`).
 
-Let's run our first metaQuantome command, and make sure that everything is installed correctly. This prints the helptext for the `expand` module (which has been truncated for brevity). 
+Now, let's run the `expand` module on the files in `input_files`.
 
-```{bash}
+```{bash results="hide", echo=-1}
 source ~/miniconda3/bin/activate mqome
-
-metaquantome expand -h | head
-```
-
-Now, let's run the `expand` module on the files in `input_files`. 
-
-```{bash results="hide",echo=-c(1:3)}
-source ~/miniconda3/bin/activate metaquantome
-# location of metaquant script
-mq=~/Projects/Griffin_lab_work/functional_taxonomic_quant/metaquantome/metaquantome/cli.py
-python $mq expand \
+metaquantome expand \
     --mode t \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
@@ -140,10 +162,11 @@ python $mq expand \
     --pep_colname_tax peptide \
     --tax_colname lca \
     --samps input_files/samples.tab \
-    --outfile mqome_outputs/tax_expanded.tab
+    --outfile mqome_outputs/tax_expanded.tab \
+    --data_dir data
 ```
 
-Note that many of the arguments give column names in the input files, so that metaQuantome can keep track of what's what. Specifically, it needs to know the name of the peptide column in each file (`--pep_colname_int`, `--pep_colname_tax`), and the name of the taxonomy least common ancestor column in the taxonomy file (`tax_colname`). 
+Note that many of the arguments give column names in the input files, so that metaQuantome can keep track of what's what. Specifically, it needs to know the name of the peptide column in each file (`--pep_colname_int`, `--pep_colname_tax`), and the name of the taxonomy least common ancestor column in the taxonomy file (`tax_colname`).
 
 Let's look at the output in `mqome_outputs`:
 
@@ -156,7 +179,7 @@ Note that quantitative outputs are included (columns like "NS_mean", which shows
 
 ## Filter
 
-Now, let's filter the `expand`ed outputs to terms about which we have a certain level of confidence. 
+Now, let's filter the `expand`ed outputs to terms about which we have a certain level of confidence.
 
 ```{bash results="hide",echo=-1}
 source ~/miniconda3/bin/activate mqome
@@ -179,7 +202,8 @@ Here, we're requiring that each term satisfy the following conditions:
 - Was quantified in at least 3 samples of each group
 
 Let's look at the output:
-```{r}
+
+```{r results='asis', echo=FALSE}
 preview_tab_file('mqome_outputs/tax_filt.tab')
 ```
 
@@ -216,13 +240,11 @@ metaquantome viz \
 ```
 
 ### NS
-```{r}
-print(getwd())
-```
 
 ![](mqome_outputs/imgs/tax_ns.png)
 
 ### WS
+
 ![](mqome_outputs/imgs/tax_ws.png)
 
 
@@ -264,14 +286,15 @@ metaquantome viz \
 
 # Differentially Expressed Functions
 
-Now, let's go through a differential expression analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` -> `filter` -> `stat` -> `viz`. 
+Now, let's go through a differential expression analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` -> `filter` -> `stat` -> `viz`.
 
 ## Expand
 
-```{bash results="hide", echo=2:11}
+```{bash results="hide", echo=-1}
 source ~/miniconda3/bin/activate mqome
 metaquantome expand \
     --mode f \
+    --data_dir data \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
     --func_file input_files/func.tab \
@@ -322,7 +345,7 @@ metaquantome stat \
 
 The visualization provided by metaQuantome for differential expression is a volcano plot, where the -log10 p value is plotted against the log2 fold change.
 
-Here, we provide the name of the fold change column in the result from `stat`, and whether or not to reverse the fold change. Note that the fold change is automatically calculated by alphabetizing the two group names, so we may want to reverse the order (here, we want to know WS over NS rather than NS over WS). 
+Here, we provide the name of the fold change column in the result from `stat`, and whether or not to reverse the fold change. Note that the fold change is automatically calculated by alphabetizing the two group names, so we may want to reverse the order (here, we want to know WS over NS rather than NS over WS).
 
 ```{bash results="hide",echo=-1}
 source ~/miniconda3/bin/activate mqome
@@ -391,6 +414,7 @@ First, we run the `expand` module. The mode is now `ft`, and we have to provide 
 source ~/miniconda3/bin/activate mqome
 metaquantome expand \
     --mode ft \
+    --data_dir data \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
     --tax_file input_files/tax.tab \

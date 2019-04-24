@@ -1,19 +1,19 @@
-Supplementary Document 1: metaQuantome tutorial
+metaQuantome Command-line Tutorial
 ================
 Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap
-December 3, 2018
+April 19, 2019
 
 Introduction
 ============
 
-This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is provided in Supplementary Document 2: Galaxy tutorial.
+This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is available [here](../galaxy_tutorial/tutorial.md).
 
 Installing metaQuantome
 =======================
 
 The easiest way to install metaQuantome with all the dependencies is by using Bioconda (provided you are on Mac or Linux, which are the only systems supported by Bioconda).
 
-First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for bioconda and metaQuantome.
+First, install the conda package manager, by downloading either Anaconda or Miniconda (see <https://docs.anaconda.com/anaconda/install/>). Then, the following commands will set up the necessary channels for Bioconda and metaQuantome. If needed, additional information on Bioconda is available at <https://bioconda.github.io/>.
 
 ``` bash
 conda config --add channels defaults
@@ -21,13 +21,19 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-Then, run the following command to set up an environment named `mqome`, which will have metaQuantome and all dependencies in it:
+Then, run the following command to set up an environment named `mqome`, which will have metaQuantome (version 1.0.0) and all dependencies in it:
 
 ``` bash
-conda create -n mqome metaquantome
+conda create -n mqome metaquantome=1.0.0
 ```
 
-This may take quite a long time (up to an hour), as Bioconda needs to figure out the best packages for your system. However, this command only needs to be run once.
+If the following prompt is seen at the command line, type `y`:
+
+``` bash
+Proceeed ([y]/n)?
+```
+
+The `create` command only needs to be run once.
 
 Finally, we can activate the environment using the following command, which will make the `metaquantome` command available.
 
@@ -35,32 +41,17 @@ Finally, we can activate the environment using the following command, which will
 source activate mqome
 ```
 
-The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>
+The rest of the tutorial will assume that you have the Conda environment activated, and are on a Mac or Linux system. Furthermore, you can follow along with the tutorial by cloning the Github repository at <https://github.com/galaxyproteomics/metaquantome_mcp_analysis> and changing your directory to `<git_repo_root>/cli_tutorial`. If you have any problems, please submit an issue at <https://github.com/galaxyproteomics/metaquantome/issues>.
 
 The data
 ========
 
-metaQuantome takes 2-3 input files depending on the mode of analysis.In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above.
+metaQuantome takes 2-3 input files depending on the mode of analysis. In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above. In addition,
 
-In this tutorial, the data is from a previously published paper \[1\], and is downsampled in the interest of speed and simplicity - so, keep in mind that these results are by not necessarily representative. The purpose of this tutorial is to demonstrate the capabilities of metaQuantome, not to analyze the full dataset. We can see the beginning of each of the files below. I'll be previewing them using an R function, to make them a little prettier:
-
-``` r
-preview_tab_file <- function(file){
-  df <- read.delim(file, sep="\t")
-  df %>%
-    head(5) %>%
-    kable() %>%
-    kable_styling("striped") %>%
-    scroll_box(width = "100%")
-}
-```
+In this tutorial, the data is from a previously published paper \[1\], and is downsampled in the interest of speed and simplicity - so, keep in mind that these results are by not necessarily representative. The purpose of this tutorial is to demonstrate the capabilities of metaQuantome, not to analyze the full dataset. We can see the beginning of each of the files below.
 
 Function
 --------
-
-``` r
-preview_tab_file('input_files/func.tab')
-```
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -122,10 +113,6 @@ Note that there can be multiple GO terms (or no GO terms) annotated to a peptide
 Taxonomy
 --------
 
-``` r
-preview_tab_file('input_files/tax.tab')
-```
-
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -186,9 +173,7 @@ Here, the peptides are annotated with their lowest common ancestor as a NCBI tax
 Peptide intensities
 -------------------
 
-``` r
-preview_tab_file('input_files/int.tab')
-```
+Here, the mass-spectrometer spectral intensities are provided for each peptide.
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -335,7 +320,41 @@ NA
 </tbody>
 </table>
 
-Now, as detailed in the manuscript, the are several questions that metaQuantome can be used to explore. Let's go through a few of these.
+Note that missing data is here represented as `NA`. In general, metaQuantome treats `0`, `NA`, and `NaN` as missing data.
+
+Also, metaQuantome assumes that input data is untransformed and normalized - that is, the data should be on the original measurement scale (not log transformed or any other transformation), and it should be normalized by an appropriate method.
+
+Databases
+=========
+
+metaQuantome has a separate module for downloading the necessary databases. Let's first get the helptext for the module and make sure everything is installed correctly:
+
+``` bash
+metaquantome db -h
+```
+
+    usage: metaquantome db [-h] [--dir DIR] [--update]
+                           {ncbi,go,ec} [{ncbi,go,ec} ...]
+
+    positional arguments:
+      {ncbi,go,ec}       database to download. note that COG mode does not require
+                         a download due to its simplicity.
+
+    optional arguments:
+      -h, --help         show this help message and exit
+      --dir DIR, -d DIR  data directory for files.
+      --update, -u       overwrite existing databases if present.
+
+If you get any errors that suggest that there has been trouble installing the package, please post on <https://github.com/galaxyproteomics/metaquantome/issues>.
+
+Now, to actually download the databases, choose a folder - here, `data` - and run the following command:
+
+``` bash
+mkdir -p ./data
+metaquantome db ncbi go --dir ./data
+```
+
+As detailed in the manuscript, the are several questions that metaQuantome can be used to explore. Let's go through a few of these.
 
 Most Abundant Taxa
 ==================
@@ -366,33 +385,14 @@ cat input_files/samples.tab
 
 The file must have the 'group<tab>colnames\` header, and cannot end with a newline. Moreover, it must be separated with 'hard' tabs rather than 'soft tabs', as must all files used by metaQuantome. On the other hand, the JSON option is simpler for a smaller number of samples. The JSON equivalent in this case is
 
-    '{"NS": ["733NS","852NS","866NS"], "WS": ["733WS", "852WS", "866WS"]}'
+    '{"NS": ["X733NS","X852NS","X866NS"], "WS": ["X733WS", "X852WS", "X866WS"]}'
 
 Note that the items in the JSON string must be surrounded by double quotes (e.g., `"thing"`).
-
-Let's run our first metaQuantome command, and make sure that everything is installed correctly. This prints the helptext for the `expand` module (which has been truncated for brevity).
-
-``` bash
-source ~/miniconda3/bin/activate mqome
-
-metaquantome expand -h | head
-```
-
-    usage: metaquantome expand [-h] --samps SAMPS --mode {f,t,ft}
-                               [--ontology {go,cog,ec}] [--nopep]
-                               [--nopep_file NOPEP_FILE] [--int_file INT_FILE]
-                               [--pep_colname_int PEP_COLNAME_INT]
-                               [--pep_colname_func PEP_COLNAME_FUNC]
-                               [--pep_colname_tax PEP_COLNAME_TAX] --outfile
-                               OUTFILE [--data_dir DATA_DIR]
-                               [--func_file FUNC_FILE]
-                               [--func_colname FUNC_COLNAME] [--slim_down]
-                               [--overwrite] [--tax_file TAX_FILE]
 
 Now, let's run the `expand` module on the files in `input_files`.
 
 ``` bash
-python $mq expand \
+metaquantome expand \
     --mode t \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
@@ -400,7 +400,8 @@ python $mq expand \
     --pep_colname_tax peptide \
     --tax_colname lca \
     --samps input_files/samples.tab \
-    --outfile mqome_outputs/tax_expanded.tab
+    --outfile mqome_outputs/tax_expanded.tab \
+    --data_dir data
 ```
 
 Note that many of the arguments give column names in the input files, so that metaQuantome can keep track of what's what. Specifically, it needs to know the name of the peptide column in each file (`--pep_colname_int`, `--pep_colname_tax`), and the name of the taxonomy least common ancestor column in the taxonomy file (`tax_colname`).
@@ -872,10 +873,6 @@ Here, we're requiring that each term satisfy the following conditions:
 
 Let's look at the output:
 
-``` r
-preview_tab_file('mqome_outputs/tax_filt.tab')
-```
-
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1343,12 +1340,6 @@ metaquantome viz \
 
 ### NS
 
-``` r
-print(getwd())
-```
-
-    [1] "/home/caleb/Projects/Griffin_lab_work/metaquantome_mcp_analysis/cli_tutorial"
-
 ![](mqome_outputs/imgs/tax_ns.png)
 
 ### WS
@@ -1402,6 +1393,7 @@ Expand
 ``` bash
 metaquantome expand \
     --mode f \
+    --data_dir data \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
     --func_file input_files/func.tab \
@@ -1518,6 +1510,7 @@ First, we run the `expand` module. The mode is now `ft`, and we have to provide 
 ``` bash
 metaquantome expand \
     --mode ft \
+    --data_dir data \
     --int_file input_files/int.tab \
     --pep_colname_int peptide \
     --tax_file input_files/tax.tab \
