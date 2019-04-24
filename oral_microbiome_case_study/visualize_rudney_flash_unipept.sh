@@ -15,7 +15,8 @@ metaquantome viz \
     --barcol 1 \
     --width 5 \
     --height 3 \
-    --target_rank genus
+    --target_rank genus \
+    --tabfile $owt/tax_bar_ns.tab
 
 metaquantome viz \
     --mode t \
@@ -27,7 +28,8 @@ metaquantome viz \
     --barcol 2 \
     --width 5 \
     --height 3 \
-    --target_rank genus
+    --target_rank genus \
+    --tabfile $owt/tax_bar_ws.tab
 
 metaquantome viz \
     --mode t \
