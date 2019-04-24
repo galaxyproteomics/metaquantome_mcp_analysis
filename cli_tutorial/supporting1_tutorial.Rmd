@@ -170,7 +170,7 @@ Note that many of the arguments give column names in the input files, so that me
 
 Let's look at the output in `mqome_outputs`:
 
-```{r}
+```{r echo=FALSE}
 preview_tab_file('mqome_outputs/tax_expanded.tab')
 ```
 

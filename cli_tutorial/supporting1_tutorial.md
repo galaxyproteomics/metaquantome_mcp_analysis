@@ -408,10 +408,6 @@ Note that many of the arguments give column names in the input files, so that me
 
 Let's look at the output in `mqome_outputs`:
 
-``` r
-preview_tab_file('mqome_outputs/tax_expanded.tab')
-```
-
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
