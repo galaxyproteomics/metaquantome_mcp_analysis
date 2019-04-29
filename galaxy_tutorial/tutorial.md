@@ -13,19 +13,121 @@ This Galaxy instance requires that all users register to access tools and workfl
 2. Once registered, click on the "User" tab and click on "Login" with your user credentials.
 
 ## The Galaxy Interface
+
 The Galaxy interface is divided into three panels: a *Tool pane* on the left side of the interface, a *Center pane/Main viewing pane* in the center and a *History* pane to the right. The *Tool* pane consists of organized list of software tools available to users in a particular Galaxy instance. The *Main* view displays the information regarding the tool, input/output from the tool, workflow editing space, etc. The *History* pane contains an ordered list of datasets that were uploaded and the outputs generated while running the tools during data analysis.  The active history is shown in the *History Pane* of the user interface.
+
+Tools in Galaxy can be run individually or as part of a *workflow*, which is a linked sequence of steps that takes some input data and provides results. In this tutorial, we'll start with running tools individually in the first analysis, and then we'll run 3 workflows.
 
 ## Import data
 
 The data used are a downsampled version of data from Rudney, et al. *Microbiome* [doi:10.1186/s40168-015-0136-z](https://dx.doi.org/10.1186/s40168-015-0136-z), using 3 pairs and 1000 peptides (and, as such, these results are not representative of the full dataset). For more detail about the data, see the *MCP* manuscript associated with this tutorial.
 
-In Galaxy, to run any workflow, the appropriate data must be provided to the workflow. Hence, the first step is to import the required input datasets.  To access the inputs for this demonstration, we have provided one history containing all the inputs required to run the tool. Let’s begin by importing the history,  click on "Shared Data" &rarr; "Histories" &rarr; " **metaQuantome MCP tutorial data**". Then, click on to import the history that contains all the input files.  The history consists of four tabular datasets: the samples file (`samples.tab`), functional annotation file (`func.tab`), quantification file (`int.tab`) and taxonomy annotation file (`tax.tab`). You can preview the files in the *Center pane* by clicking on the eye icon:
+In Galaxy, to run any tool/workflow, the appropriate data must be provided. Hence, the first step is to import the required input datasets.  To access the inputs for this demonstration, we have provided one history containing all the inputs required to run the tool. Let’s begin by importing the history,  click on "Shared Data" &rarr; "Histories" &rarr; " **metaQuantome MCP tutorial data**". Then, click on to import the history that contains all the input files.  The history consists of four tabular datasets: the samples file (`samples.tab`), functional annotation file (`func.tab`), quantification file (`int.tab`) and taxonomy annotation file (`tax.tab`). You can preview the files in the *Center pane* by clicking on the eye icon:
 
-![eye image](images/eye_location.png).
+![eye image](images/eye_location.png)
+
+## Analysis 1: Most Abundant Taxa
+
+### Database module
+
+First, we have to download the databases that are used to expand the hierarchies. To do this, find the "metaQuantome" section in the tool panel (on the left), and click on "metaQuantome: database". The center pane should now look like this:
+
+![database](images/database_center.png)
+
+Usually, it's fine to download all 3 databases - the only situation in which you wouldn't want to is when you are short on disk space and are absolutely sure you don't need the taxonomy database, which is the largest. Click 'Execute', and a new dataset will appear in the history panel (on the right).
+
+### Samples Module 
+
+Next, we'll create the "samples file", which specifies the experimental design. Click on "metaQuantome: create samples file" in the Tool Panel. We'll use the `int.tab` file to create the samples file, so for the "Sample file creation method", choose "Select samples from the header of an existing file", then choose `int.tab` for the "File with group name headers" parameter:
+
+![samples file](images/samples_file.png)
+
+We have two experimental conditions: NS and WS. Click "Insert Samples", and name the first group "NS". Then, select the columns that correspond to the NS group - this is columns 3, 5, and 7:
+
+![ns group](images/samples_file_NS.png)
+
+Repeat the process for WS (columns 2, 4, and 6):
+
+![both groups](images/samples_file_both.png)
+
+Now, click "Execute". You will see a new tabular file appear in the history pane.
+
+### Expand module
+
+Next, we'll expand the taxonomic annotations using `metaQuantome: expand`. To do this, click on "metaQuantome: expand" in the Tool Panel. The center pane will show the `expand` tool:
+
+![expand defaults](images/expand_defaults.png)
+
+First, put in the following parameter values:
+
+* Database archive file: the output from "metaQuantome: database"
+* Samples file: the output from "metaQuantome: create samples file"
+* Mode: Taxonomic analysis
+
+After you select "Taxonomic analysis", you'll see new options open up below that selection. Input these parameters:
+
+* Taxonomy assignments file: `tax.tab`
+* "Taxonomy file: peptide column name": `peptide` (the default) 
+* Taxonomy column name: `lca`
+* Intensity file: `int.tab`
+* "Intensity file: peptide column name": `peptide` (the default)
+
+Now, click "Execute". If the output dataset turns green - great! Process to the next step. If the dataset turns red, that means an error has occurred. Please double check your parameters against the below image and try again:
+
+![expand rtg](images/expand_ready_to_go.png)
+
+Note that the dataset numbers may be slightly different, depending on the order of datasets in your history, but the names should be the same.
+
+If you continue to get an error, please post a detailed message on <https://github.com/galaxyproteomics/tools-galaxyp/issues>.
+
+### Filter module
+
+Next, we'll filter the expanded set of taxa to only those that were quantified in 2 samples per experimental condition. To do this, click "metaQuantome: filter" in the metaQuantome tool panel section. The parameters should be as follows:
+
+* Mode: Taxonomic analysis
+* Samples file: output from metaQuantome samples (same as before)
+* metaquantome expand file: output from metaQuantome expand
+* min_peptides: 1
+* min_pep_nsamp: 1
+* min_children_non_leaf: 2
+* min_child_nsamp: 1
+* qthreshold: 2
+
+Your tool should look similar to this image:
+
+![filter rtg](images/filter_ready_to_go.png)
+
+Now, click "Execute". A new history dataset should appear in the right-hand pane. If the dataset turns red, double check your parameters and try again.
+
+### Viz module
+
+With the viz module, we can visualize the most abundant taxa. Click "metaQuantome: visualize" in the Tool Panel.
+
+The first three parameters should be as follows:
+
+* Tabular file from metaQuantome stats or metaQuantome filter: output from metaQuantome: filter
+* Samples file: output from metaQuantome: create samples file
+* Mode: Taxonomic analysis
+
+Once you choose "Taxonomic analysis" as the mode, you will see the available plot options. We'll use the ""barplot".
+
+We'll start with the 5 most abundant genera in NS. To do this, we need to select the rank and the mean intensity column.
+
+For rank, use the drop-down menu to select "genus". The mean intensity column is named by metaQuantome as `<group name>_mean` - in this case, `NS_mean`. Finally, we'll select 5 terms to display and Blue bars. The tool should look like this:
+
+![ns genera](images/ns_genera.png)
+
+Click "Execute". For barplots, this tool produces two outputs: one is a plot image, wrapped in an HTML file, and the other is a tabular file with the plot data. The plotted values are in the `NS_mean` column.
+
+Now, we'll do the same but for WS. Everything can stay the same except the mean intensity column name, which should be changed to `WS_mean`. Once again, click "Execute" and view the plot!
+
+For the remaining analyses, we'll run workflows, which are a compact way to store and share a series of steps. For extra practice, you could recreate the workflows by running individual tools.
+
 
 ## Running the workflows
 
-Once the files have been imported, these will show up as items in our active history.
+First, create another history (you can call it something like "workflow data files"), and import the input data files again. We'll start with Workflow 2, since we reproduced workflow 1 above.
+
 We’re now going to run *Workflows* on the input data. The workflows follow the analyses in the command line tutorial (Supplementary Document 1 of the *Mol Cell Proteomics* manuscript). If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
 
 ### Workflow 1: Most Abundant Taxa
