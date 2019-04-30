@@ -16,7 +16,7 @@ This Galaxy instance requires that all users register to access tools and workfl
 
 The Galaxy interface is divided into three panels: a *Tool pane* on the left side of the interface, a *Center pane/Main viewing pane* in the center and a *History* pane to the right. The *Tool* pane consists of organized list of software tools available to users in a particular Galaxy instance. The *Main* view displays the information regarding the tool, input/output from the tool, workflow editing space, etc. The *History* pane contains an ordered list of datasets that were uploaded and the outputs generated while running the tools during data analysis.  The active history is shown in the *History Pane* of the user interface.
 
-Tools in Galaxy can be run individually or as part of a *workflow*, which is a linked sequence of steps that takes some input data and provides results. In this tutorial, we'll start with running tools individually in the first analysis, and then we'll run 3 workflows.
+Tools in Galaxy can be run individually or as part of a *workflow*, which is a linked sequence of steps that takes some input data and provides results. In this tutorial, we'll start with running tools individually in the first analysis, and then we'll run 4 workflows.
 
 ## Import data
 
@@ -128,13 +128,11 @@ For the remaining analyses, we'll run workflows, which are a compact way to stor
 
 ## Running the workflows
 
-First, create another history (you can call it something like "workflow data files"), and import the input data files again. We'll start with Workflow 2, since we reproduced workflow 1 above.
-
-We’re now going to run *Workflows* on the input data. The workflows follow the analyses in the command line tutorial (Supplementary Document 1 of the *Mol Cell Proteomics* manuscript). If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
+First, create another history. This history will be used only for Workflow 1, so you can call it something like "Workflow 1". Then, and import the history called "metaQuantome MCP: workflow input data". We'll start with a workflow version of Analysis 1. If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
 
 ### Workflow 1: Most Abundant Taxa
 
-The next step is to import the workflow.  There are four workflows for running metaQuantome. The first workflow is the "metaQuantome Workflow 1: Most abundant Taxa". This workflow is used to identify the most abundant taxa in an experiment.
+The first workflow is the "metaQuantome Workflow 1: Most abundant Taxa". This workflow is used to identify the most abundant taxa in an experiment.
 
 To import this workflow, go to Shared Data &rarr; "Workflows" &rarr; "metaQuantome workflow 1: most abundant taxa". If you don't see this workflow, try searching "metaQuantome" in the search box. 
 
@@ -156,28 +154,28 @@ Then, select the "Edit" option. This will display the *Workflow Editor*, which o
 
 By clicking on each of the steps, you can see the parameters that are used in that run of the tool.
 
-Now, go back the the "Workflow" tab. Click the dropdown arrow and select the "Run" option. The workflow will now open in the Main viewing pane. First, select "Yes" for "Send results to a new history", which will keep the input data history clean (for all workflows, you need to be in the input data history when you run it). The default name is fine. Next, to run the workflow, appropriate inputs have to be selected. For the "Taxonomic annotation file" field, select the `tax.tab` file. For the "Samples" file field, select `samples.tab`. Finally, for the "Intensity file" field, select the `int.tab` file. The center pane should now look like this:
+Now, go back the the "Workflow" tab. Click the dropdown arrow and select the "Run" option. The workflow will now open in the Main viewing pane. Next, to run the workflow, appropriate inputs have to be selected. For the "Taxonomic annotation file" field, select the `tax.tab` file. For the "Samples" file field, select `samples.tab`. Finally, for the "Intensity file" field, select the `int.tab` file. The center pane should now look like this:
 
 ![](images/running_workflow1.png)
 
-Finally, click "Run Workflow". To see the new history with the results, click "Switch to that history" on the page that loads after running the workflow. The workflow has two main outputs: a plot of the highest-abundance species for the no sucrose condition (NS) and another plot for the with sucrose condition (WS). Again, all of the files can be viewed by clicking the eye image ![](images/eye_icon.png).
+Finally, click "Run Workflow". Each of the steps should appear, turn yellow, and then turn green (indicating success). The workflow has two main outputs: a plot of the highest-abundance species for the no sucrose condition (NS) and another plot for the with sucrose condition (WS). Again, all of the files can be viewed by clicking the eye image ![](images/eye_icon.png). You can compare these results with the results you got in the step-by-step analysis - they should be the same!
 
 ### Workflow 2: Cluster Analysis of Taxonomy
-To run the next workflow, we must first go to the input data history. If you are in a different history, go back to "Imported: metaquantome MCP tutorial data", which you can find by clicking the gear icon in the History pane and going to "Saved Histories":
 
-![](images/back_to_inputs_2.png)
+We'll create another new history for Workflow 2, and import the same files (the history named "metaQuantome MCP: workflow input data").
 
 Then, import the workflow "metaQuantome workflow 2: cluster analysis of taxonomy". The inputs are the same as in the first workflow. After running `expand` and `filter`, this workflow creates a PCA plot and the second creates a heatmap.
 
-### Workflow 3: Differentially Expressed Functions
-In workflow 3, we perform functional differential expression analysis with metaQuantome. For this, import workflow 3, "metaQuantome workflow 3: differentially expressed functions". The inputs for workflow 3 are `func.tab` (the "Function annotation file"), `samples.tab` (the "Samples file"), and `int.tab` (the "Intensity file"). After selecting the correct inputs, the center pane should look like this:
+### Workflow 3: Differentially Abundant Functions
+
+Once again, create a new history and import the input data. In workflow 3, we perform functional differential abundance analysis with metaQuantome. For this, import workflow 3, "metaQuantome workflow 3: differentially abundant functions". The inputs for workflow 3 are `func.tab` (the "Function annotation file"), `samples.tab` (the "Samples file"), and `int.tab` (the "Intensity file"). After selecting the correct inputs, the center pane should look like this:
 
 ![](images/workflow3.png)
 
 The outputs from this workflow are volcano plots, which plots the log2 fold change against the -log10 p value for each GO term. The green points are those GO terms that are below 5% FDR and had a greater-than-2-fold change. The workflow outputs 3 volcano plots, showing different options available within metaQuantome: adding text to the differentially expressed terms and plotting biological process, molecular function, and cellular component separately.
 
 ### Workflow 4: Function-Taxonomy Interaction
-The fourth workflow analyzes function and taxonomy together. First, import "metaQuantome workflow 4: function taxonomy interaction". Now, we use all 4 inputs from the "Imported: metaquantome MCP tutorial data" history, as follows:
+The fourth workflow analyzes function and taxonomy together. First, create a history and import the input data, then import the workflow "metaQuantome workflow 4: function taxonomy interaction". Now, we use all 4 inputs from the "Imported: metaquantome MCP tutorial data" history, as follows:
 
 - `func.tab` &rarr; Functional annotation file
 - `tax.tab` &rarr; Taxonomic annotation file
