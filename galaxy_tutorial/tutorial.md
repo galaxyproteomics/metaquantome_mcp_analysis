@@ -22,19 +22,20 @@ Tools in Galaxy can be run individually or as part of a *workflow*, which is a l
 
 The data used are a downsampled version of data from Rudney, et al. *Microbiome* [doi:10.1186/s40168-015-0136-z](https://dx.doi.org/10.1186/s40168-015-0136-z), using 3 pairs and 1000 peptides (and, as such, these results are not representative of the full dataset). For more detail about the data, see the *MCP* manuscript associated with this tutorial.
 
-In Galaxy, to run any tool/workflow, the appropriate data must be provided. Hence, the first step is to import the required input datasets.  To access the inputs for this demonstration, we have provided one history containing all the inputs required to run the tool. Let’s begin by importing the history,  click on "Shared Data" &rarr; "Histories" &rarr; " **metaQuantome MCP tutorial data**". Then, click on to import the history that contains all the input files.  The history consists of four tabular datasets: the samples file (`samples.tab`), functional annotation file (`func.tab`), quantification file (`int.tab`) and taxonomy annotation file (`tax.tab`). You can preview the files in the *Center pane* by clicking on the eye icon:
-
-![](images/eye_icon.png)
 
 ## Analysis 1: Most Abundant Taxa
 
+In Galaxy, to run any tool/workflow, the appropriate data must be provided. Hence, the first step is to import the required input datasets. To do that, click on "Shared Data" &rarr; "Histories" &rarr; " **metaQuantome MCP: analysis 1, step-by-step**". Then, click on "Import History" to import this history, which contains the input files for this analysis. The history consists of three tabular datasets: the functional annotation file (`func.tab`), quantification file (`int.tab`) and taxonomy annotation file (`tax.tab`). You can preview the files in the *Center pane* by clicking on the eye icon:
+
+![](images/eye_icon.png)
+
 ### Database module
 
-First, we have to download the databases that are used to expand the hierarchies. To do this, find the "metaQuantome" section in the tool panel (on the left), and click on "metaQuantome: database". The center pane should now look like this:
+Next, we have to download the databases that are used to expand the hierarchies. To do this, click on the "metaQuantome" section in the Tool Pane (on the left side of the Galaxy interface), and click on "metaQuantome: database". The center pane should now look like this:
 
 ![](images/database_center.png)
 
-Usually, it's fine to download all 3 databases - the only situation in which you wouldn't want to is when you are short on disk space and are absolutely sure you don't need the taxonomy database, which is the largest. Click 'Execute', and a new dataset will appear in the history panel (on the right).
+Usually, it's fine to download all 3 databases - the only situation in which you wouldn't want to is when you are short on disk space and are absolutely sure you don't need the taxonomy database, which is the largest. Click 'Execute', and a new dataset will appear in the History Pane (on the right side of the Galaxy interface).
 
 ### Samples Module 
 
@@ -50,11 +51,11 @@ Repeat the process for WS (columns 2, 4, and 6):
 
 ![](images/samples_file_both.png)
 
-Now, click "Execute". You will see a new tabular file appear in the history pane.
+Now, click "Execute". You will see a new tabular file appear in the history pane. As before, you can preview the file by clicking on the eye icon.
 
 ### Expand module
 
-Next, we'll expand the taxonomic annotations using `metaQuantome: expand`. To do this, click on "metaQuantome: expand" in the Tool Panel. The center pane will show the `expand` tool:
+Next, we'll expand the taxonomic annotations using `metaQuantome: expand`. To do this, click on "metaQuantome: expand" in the Tool Panel. The center pane will show the `expand` tool interface (this is before any parameters have been changed):
 
 ![](images/expand_defaults.png)
 
@@ -72,7 +73,7 @@ After you select "Taxonomic analysis", you'll see new options open up below that
 * Intensity file: `int.tab`
 * "Intensity file: peptide column name": `peptide` (the default)
 
-Now, click "Execute". If the output dataset turns green - great! Process to the next step. If the dataset turns red, that means an error has occurred. Please double check your parameters against the below image and try again:
+Now, click "Execute". If the output dataset turns green - great! Proceed to the next step. If the dataset turns red, that means an error has occurred. Please double check your parameters against the below image and try again:
 
 ![](images/expand_ready_to_go.png)
 
