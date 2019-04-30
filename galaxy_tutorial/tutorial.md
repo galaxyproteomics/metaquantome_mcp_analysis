@@ -128,9 +128,11 @@ For the remaining analyses, we'll run workflows, which are a compact way to stor
 
 ## Running the workflows
 
-First, create another history. This history will be used only for Workflow 1, so you can call it something like "Workflow 1". Then, and import the history called "metaQuantome MCP: workflow input data". We'll start with a workflow version of Analysis 1. If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
+We'll start with a workflow version of Analysis 1, then go on to other analyses. If you have trouble with any of the workflows, you can import the workflow result histories - for workflow 1, the history is called "metaQuantome workflow 1 results: most abundant taxa", and so on.
 
 ### Workflow 1: Most Abundant Taxa
+
+First, import the history called "metaQuantome MCP: workflow input data". To keep track of your histories, it's suggested that you give them clear and informative names. Here, let's name it "metaQuantome workflow 1".
 
 The first workflow is the "metaQuantome Workflow 1: Most abundant Taxa". This workflow is used to identify the most abundant taxa in an experiment.
 
@@ -156,26 +158,26 @@ By clicking on each of the steps, you can see the parameters that are used in th
 
 Now, go back the the "Workflow" tab. Click the dropdown arrow and select the "Run" option. The workflow will now open in the Main viewing pane. Next, to run the workflow, appropriate inputs have to be selected. For the "Taxonomic annotation file" field, select the `tax.tab` file. For the "Samples" file field, select `samples.tab`. Finally, for the "Intensity file" field, select the `int.tab` file. The center pane should now look like this:
 
-![](images/running_workflow1.png)
+![](images/ready_to_run_w1.png)
 
 Finally, click "Run Workflow". Each of the steps should appear, turn yellow, and then turn green (indicating success). The workflow has two main outputs: a plot of the highest-abundance species for the no sucrose condition (NS) and another plot for the with sucrose condition (WS). Again, all of the files can be viewed by clicking the eye image ![](images/eye_icon.png). You can compare these results with the results you got in the step-by-step analysis - they should be the same!
 
 ### Workflow 2: Cluster Analysis of Taxonomy
 
-We'll create another new history for Workflow 2, and import the same files (the history named "metaQuantome MCP: workflow input data").
+To start, we'll import the input data to a new history and rename it (the history named "metaQuantome MCP: workflow input data").
 
 Then, import the workflow "metaQuantome workflow 2: cluster analysis of taxonomy". The inputs are the same as in the first workflow. After running `expand` and `filter`, this workflow creates a PCA plot and the second creates a heatmap.
 
 ### Workflow 3: Differentially Abundant Functions
 
-Once again, create a new history and import the input data. In workflow 3, we perform functional differential abundance analysis with metaQuantome. For this, import workflow 3, "metaQuantome workflow 3: differentially abundant functions". The inputs for workflow 3 are `func.tab` (the "Function annotation file"), `samples.tab` (the "Samples file"), and `int.tab` (the "Intensity file"). After selecting the correct inputs, the center pane should look like this:
+Once again, import the input data to a new history and rename it. In workflow 3, we perform functional differential abundance analysis with metaQuantome. For this, import workflow 3, "metaQuantome workflow 3: differentially abundant functions". The inputs for workflow 3 are `func.tab` (the "Function annotation file"), `samples.tab` (the "Samples file"), and `int.tab` (the "Intensity file"). After selecting the correct inputs, the center pane should look like this:
 
-![](images/workflow3.png)
+![](images/ready_to_run_w3.png)
 
 The outputs from this workflow are volcano plots, which plots the log2 fold change against the -log10 p value for each GO term. The green points are those GO terms that are below 5% FDR and had a greater-than-2-fold change. The workflow outputs 3 volcano plots, showing different options available within metaQuantome: adding text to the differentially expressed terms and plotting biological process, molecular function, and cellular component separately.
 
 ### Workflow 4: Function-Taxonomy Interaction
-The fourth workflow analyzes function and taxonomy together. First, create a history and import the input data, then import the workflow "metaQuantome workflow 4: function taxonomy interaction". Now, we use all 4 inputs from the "Imported: metaquantome MCP tutorial data" history, as follows:
+The fourth workflow analyzes function and taxonomy together. First, import the input data again, then import the workflow "metaQuantome workflow 4: function taxonomy interaction". Now, we use all 4 inputs from the "Imported: metaquantome MCP tutorial data" history, as follows:
 
 - `func.tab` &rarr; Functional annotation file
 - `tax.tab` &rarr; Taxonomic annotation file
@@ -184,7 +186,7 @@ The fourth workflow analyzes function and taxonomy together. First, create a his
 
 The Center Pane should look like this when you are ready to run:
 
-![](images/workflow4.png)
+![](images/ready_to_run_w4.png)
 
 Now, click "Run workflow". The outputs are barplots showing the taxonomic distribution of the GO term for "carbohydrate metabolic process" (GO:0005975) for NS (blue) and WS (orange)
 
