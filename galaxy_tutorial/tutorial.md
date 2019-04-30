@@ -24,7 +24,7 @@ The data used are a downsampled version of data from Rudney, et al. *Microbiome*
 
 In Galaxy, to run any tool/workflow, the appropriate data must be provided. Hence, the first step is to import the required input datasets.  To access the inputs for this demonstration, we have provided one history containing all the inputs required to run the tool. Let’s begin by importing the history,  click on "Shared Data" &rarr; "Histories" &rarr; " **metaQuantome MCP tutorial data**". Then, click on to import the history that contains all the input files.  The history consists of four tabular datasets: the samples file (`samples.tab`), functional annotation file (`func.tab`), quantification file (`int.tab`) and taxonomy annotation file (`tax.tab`). You can preview the files in the *Center pane* by clicking on the eye icon:
 
-![eye image](images/eye_location.png)
+![](images/eye_icon.png)
 
 ## Analysis 1: Most Abundant Taxa
 
@@ -32,7 +32,7 @@ In Galaxy, to run any tool/workflow, the appropriate data must be provided. Henc
 
 First, we have to download the databases that are used to expand the hierarchies. To do this, find the "metaQuantome" section in the tool panel (on the left), and click on "metaQuantome: database". The center pane should now look like this:
 
-![database](images/database_center.png)
+![](images/database_center.png)
 
 Usually, it's fine to download all 3 databases - the only situation in which you wouldn't want to is when you are short on disk space and are absolutely sure you don't need the taxonomy database, which is the largest. Click 'Execute', and a new dataset will appear in the history panel (on the right).
 
@@ -40,15 +40,15 @@ Usually, it's fine to download all 3 databases - the only situation in which you
 
 Next, we'll create the "samples file", which specifies the experimental design. Click on "metaQuantome: create samples file" in the Tool Panel. We'll use the `int.tab` file to create the samples file, so for the "Sample file creation method", choose "Select samples from the header of an existing file", then choose `int.tab` for the "File with group name headers" parameter:
 
-![samples file](images/samples_file.png)
+![](images/samples_file.png)
 
 We have two experimental conditions: NS and WS. Click "Insert Samples", and name the first group "NS". Then, select the columns that correspond to the NS group - this is columns 3, 5, and 7:
 
-![ns group](images/samples_file_NS.png)
+![](images/samples_file_NS.png)
 
 Repeat the process for WS (columns 2, 4, and 6):
 
-![both groups](images/samples_file_both.png)
+![](images/samples_file_both.png)
 
 Now, click "Execute". You will see a new tabular file appear in the history pane.
 
@@ -56,7 +56,7 @@ Now, click "Execute". You will see a new tabular file appear in the history pane
 
 Next, we'll expand the taxonomic annotations using `metaQuantome: expand`. To do this, click on "metaQuantome: expand" in the Tool Panel. The center pane will show the `expand` tool:
 
-![expand defaults](images/expand_defaults.png)
+![](images/expand_defaults.png)
 
 First, put in the following parameter values:
 
@@ -74,7 +74,7 @@ After you select "Taxonomic analysis", you'll see new options open up below that
 
 Now, click "Execute". If the output dataset turns green - great! Process to the next step. If the dataset turns red, that means an error has occurred. Please double check your parameters against the below image and try again:
 
-![expand rtg](images/expand_ready_to_go.png)
+![](images/expand_ready_to_go.png)
 
 Note that the dataset numbers may be slightly different, depending on the order of datasets in your history, but the names should be the same.
 
@@ -95,7 +95,7 @@ Next, we'll filter the expanded set of taxa to only those that were quantified i
 
 Your tool should look similar to this image:
 
-![filter rtg](images/filter_ready_to_go.png)
+![](images/filter_ready_to_go.png)
 
 Now, click "Execute". A new history dataset should appear in the right-hand pane. If the dataset turns red, double check your parameters and try again.
 
@@ -115,7 +115,7 @@ We'll start with the 5 most abundant genera in NS. To do this, we need to select
 
 For rank, use the drop-down menu to select "genus". The mean intensity column is named by metaQuantome as `<group name>_mean` - in this case, `NS_mean`. Finally, we'll select 5 terms to display and Blue bars. The tool should look like this:
 
-![ns genera](images/ns_genera.png)
+![](images/ns_genera.png)
 
 Click "Execute". For barplots, this tool produces two outputs: one is a plot image, wrapped in an HTML file, and the other is a tabular file with the plot data. The plotted values are in the `NS_mean` column.
 
@@ -123,7 +123,7 @@ Now, we'll do the same but for WS. Everything can stay the same except the mean 
 
 For the remaining analyses, we'll run workflows, which are a compact way to store and share a series of steps. For extra practice, you could recreate the workflows by running individual tools.
 
-![eye image](images/view_data.png).
+![](images/view_data.png).
 
 ## Running the workflows
 
@@ -139,39 +139,39 @@ To import this workflow, go to Shared Data &rarr; "Workflows" &rarr; "metaQuanto
 
 Now, click on Import Workflow:
 
-![import workflow](images/workflow_import.png)
+![](images/workflow_import.png)
 
 Once the workflow is imported, it will now be available in the "Workflow" tab in the Galaxy instance.
 
-![workflow tab](images/workflow_tab.png)
+![](images/workflow_tab.png)
 
 First, we'll visualize the steps in the workflow. Go to the "Workflow" tab, and click on the downward-pointing arrow next to "metaQuantome workflow 1: most abundant taxa".
 
-![dropdown](images/dropdown_w1.png)
+![](images/dropdown_w1.png)
 
 Then, select the "Edit" option. This will display the *Workflow Editor*, which offers the best view of a workflow and is one place that workflows can be built.
 
-![workflow editor](images/workflow1.png)
+![](images/workflow1.png)
 
 By clicking on each of the steps, you can see the parameters that are used in that run of the tool.
 
 Now, go back the the "Workflow" tab. Click the dropdown arrow and select the "Run" option. The workflow will now open in the Main viewing pane. First, select "Yes" for "Send results to a new history", which will keep the input data history clean (for all workflows, you need to be in the input data history when you run it). The default name is fine. Next, to run the workflow, appropriate inputs have to be selected. For the "Taxonomic annotation file" field, select the `tax.tab` file. For the "Samples" file field, select `samples.tab`. Finally, for the "Intensity file" field, select the `int.tab` file. The center pane should now look like this:
 
-![Ready to run!](images/running_workflow1.png)
+![](images/running_workflow1.png)
 
-Finally, click "Run Workflow". To see the new history with the results, click "Switch to that history" on the page that loads after running the workflow. The workflow has two main outputs: a plot of the highest-abundance species for the no sucrose condition (NS) and another plot for the with sucrose condition (WS). Again, all of the files can be viewed by clicking the eye image ![eye image](images/eye_icon.png).
+Finally, click "Run Workflow". To see the new history with the results, click "Switch to that history" on the page that loads after running the workflow. The workflow has two main outputs: a plot of the highest-abundance species for the no sucrose condition (NS) and another plot for the with sucrose condition (WS). Again, all of the files can be viewed by clicking the eye image ![](images/eye_icon.png).
 
 ### Workflow 2: Cluster Analysis of Taxonomy
 To run the next workflow, we must first go to the input data history. If you are in a different history, go back to "Imported: metaquantome MCP tutorial data", which you can find by clicking the gear icon in the History pane and going to "Saved Histories":
 
-![with click](images/back_to_inputs_2.png)
+![](images/back_to_inputs_2.png)
 
 Then, import the workflow "metaQuantome workflow 2: cluster analysis of taxonomy". The inputs are the same as in the first workflow. After running `expand` and `filter`, this workflow creates a PCA plot and the second creates a heatmap.
 
 ### Workflow 3: Differentially Expressed Functions
 In workflow 3, we perform functional differential expression analysis with metaQuantome. For this, import workflow 3, "metaQuantome workflow 3: differentially expressed functions". The inputs for workflow 3 are `func.tab` (the "Function annotation file"), `samples.tab` (the "Samples file"), and `int.tab` (the "Intensity file"). After selecting the correct inputs, the center pane should look like this:
 
-![ready to run workflow 3](images/workflow3.png)
+![](images/workflow3.png)
 
 The outputs from this workflow are volcano plots, which plots the log2 fold change against the -log10 p value for each GO term. The green points are those GO terms that are below 5% FDR and had a greater-than-2-fold change. The workflow outputs 3 volcano plots, showing different options available within metaQuantome: adding text to the differentially expressed terms and plotting biological process, molecular function, and cellular component separately.
 
@@ -185,7 +185,7 @@ The fourth workflow analyzes function and taxonomy together. First, import "meta
 
 The Center Pane should look like this when you are ready to run:
 
-![ready to run workflow 4](images/workflow4.png)
+![](images/workflow4.png)
 
 Now, click "Run workflow". The outputs are barplots showing the taxonomic distribution of the GO term for "carbohydrate metabolic process" (GO:0005975) for NS (blue) and WS (orange)
 
