@@ -1,8 +1,6 @@
 #!/bin/bash
 
-source ~/miniconda3/bin/activate mqome
-
-cd ~/Projects/Griffin_lab_work/metaquantome_mcp_analysis/oral_microbiome_case_study/metaquantome_inputs
+cd metaquantome_inputs
 
 owt=../mqome_outputs
 
@@ -15,9 +13,10 @@ metaquantome viz \
     --plottype bar \
     --meancol NS_mean \
     --barcol 1 \
-    --width 6 \
-    --height 5 \
-    --target_rank genus
+    --width 5 \
+    --height 3 \
+    --target_rank genus \
+    --tabfile $owt/tax_bar_ns.tab
 
 metaquantome viz \
     --mode t \
@@ -27,9 +26,10 @@ metaquantome viz \
     --plottype bar \
     --meancol WS_mean \
     --barcol 2 \
-    --width 6 \
-    --height 5 \
-    --target_rank genus
+    --width 5 \
+    --height 3 \
+    --target_rank genus \
+    --tabfile $owt/tax_bar_ws.tab
 
 metaquantome viz \
     --mode t \
@@ -57,8 +57,8 @@ metaquantome viz \
     --fc_name log2fc_NS_over_WS \
     --flip_fc \
     --textannot taxon_name \
-    --width 7 \
-    --height 6
+    --width 6 \
+    --height 4
 
 
 # function
@@ -105,7 +105,10 @@ metaquantome viz \
     --id GO:0005975 \
     --target_rank genus \
     --nterms 'all' \
-    --barcol 1
+    --barcol 1 \
+    --tabfile $owt/tf_carbo_ns.tab \
+    --width 5 \
+    --height 3.5
 
 metaquantome viz \
     --mode ft \
@@ -118,7 +121,10 @@ metaquantome viz \
     --id GO:0005975 \
     --target_rank genus \
     --nterms 'all' \
-    --barcol 2
+    --barcol 2 \
+    --tabfile $owt/tf_carbo_ws.tab \
+    --width 5 \
+    --height 3.5
 
 # functional distribution for Streptococcaceae
 metaquantome viz \

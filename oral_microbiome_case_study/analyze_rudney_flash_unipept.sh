@@ -1,12 +1,10 @@
 #!/bin/bash
 
-source ~/miniconda3/bin/activate mqome
-
 # run from oral_microbiome_case study
 
 # this is only for function, because taxonomy is large
 # and updates automatically
-f_ddir=../cached_databases
+ddir=../cached_databases
 
 owt=mqome_outputs
 inp=metaquantome_inputs
@@ -15,6 +13,7 @@ inp=metaquantome_inputs
 metaquantome expand \
     --mode t \
     --samps $inp/rudney_samples.tab \
+    --data_dir $ddir \
     --int_file $inp/flash_norm.tab \
     --pep_colname_int peptide \
     --pep_colname_tax peptide \
@@ -41,7 +40,7 @@ metaquantome stat \
 
 # function full descriptive
 metaquantome expand \
-	--data_dir $f_ddir \
+	--data_dir $ddir \
 	--mode f \
 	--ontology go \
 	--samps $inp/rudney_samples.tab \
@@ -75,7 +74,7 @@ metaquantome stat \
 # taxonomy-function
 # use cached func data dir, default tax dir (can't cache)
 metaquantome expand \
-	--ft_func_data_dir $f_ddir \
+	--data_dir $ddir \
 	--mode ft \
 	--ontology go \
 	--samps $inp/rudney_samples.tab \

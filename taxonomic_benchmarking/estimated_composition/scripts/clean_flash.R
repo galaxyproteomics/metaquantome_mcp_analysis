@@ -6,7 +6,13 @@ clean <- f %>%
 
 library(stringr)
 newnames <- str_match(names(clean)[2:9], "Intensity_(.*)_2000ng")[, 2]
-
 names(clean)[2:9] <- newnames
-write.table(clean, file="estimated_composition/mqome_inputs/flash.tab", quote=FALSE, row.names=FALSE,
+
+library(limma)
+num <- log2(data.matrix(clean[, 2:9]))
+norm <- 2^limma::normalizeBetweenArrays(num, method="quantile")
+clean_norm <- data.frame('peptide' = clean$peptide,
+                         norm)
+
+write.table(clean_norm, file="estimated_composition/mqome_inputs/flash.tab", quote=FALSE, row.names=FALSE,
 			sep="\t")

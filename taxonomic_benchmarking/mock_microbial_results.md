@@ -52,17 +52,17 @@ Original Intensity:
 <tbody>
   <tr>
    <td style="text-align:left;"> metaquantome </td>
-   <td style="text-align:right;"> 35 </td>
-   <td style="text-align:left;"> 0.778893994374952 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:left;"> 0.64039640517965 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> lca (intensity) </td>
-   <td style="text-align:right;"> 32 </td>
-   <td style="text-align:left;"> 1.12850710040096 </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:left;"> 0.953673214076277 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> true </td>
-   <td style="text-align:right;"> 46 </td>
+   <td style="text-align:right;"> 47 </td>
    <td style="text-align:left;"> - </td>
   </tr>
 </tbody>
