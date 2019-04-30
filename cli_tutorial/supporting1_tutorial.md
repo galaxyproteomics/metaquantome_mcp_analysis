@@ -3,6 +3,8 @@ metaQuantome Command-line Tutorial
 Caleb W. Easterly, Ray Sajulga, Subina Mehta, James Johnson, Praveen Kumar, Shane Hubler, Bart Mesuere, Joel Rudney, Timothy J. Griffin, Pratik D. Jagtap
 April 19, 2019
 
+[go back to the main page](../README.md)
+
 Introduction
 ============
 
@@ -1378,10 +1380,10 @@ metaquantome viz \
 
 ![](mqome_outputs/imgs/tax_heatmap.png)
 
-Differentially Expressed Functions
-==================================
+Differentially Abundant Functions
+=================================
 
-Now, let's go through a differential expression analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` -&gt; `filter` -&gt; `stat` -&gt; `viz`.
+Now, let's go through a differential abundance analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` -&gt; `filter` -&gt; `stat` -&gt; `viz`.
 
 Expand
 ------
@@ -1438,7 +1440,7 @@ metaquantome stat \
 Viz
 ---
 
-The visualization provided by metaQuantome for differential expression is a volcano plot, where the -log10 p value is plotted against the log2 fold change.
+The visualization provided by metaQuantome for differential abundance is a volcano plot, where the -log10 p value is plotted against the log2 fold change.
 
 Here, we provide the name of the fold change column in the result from `stat`, and whether or not to reverse the fold change. Note that the fold change is automatically calculated by alphabetizing the two group names, so we may want to reverse the order (here, we want to know WS over NS rather than NS over WS).
 
@@ -1456,7 +1458,7 @@ metaquantome viz \
 
 ![](mqome_outputs/imgs/func_dea.png)
 
-We may also want to see the names specific terms that are differentially expressed. To do this, we provide the name of the column that has the text we want to plot - usually, the `id` column (for function) or `taxon_name` (for taxonomy) to `--textannot`. The plotting program automatically hides some of the terms to avoid overplotting - see `mqome_outputs/func_stat.tab` for the full list of results.
+We may also want to see the names specific terms that are differentially abundant. To do this, we provide the name of the column that has the text we want to plot - usually, the `id` column (for function) or `taxon_name` (for taxonomy) to `--textannot`. The plotting program automatically hides some of the terms to avoid overplotting - see `mqome_outputs/func_stat.tab` for the full list of results.
 
 ``` bash
 metaquantome viz \

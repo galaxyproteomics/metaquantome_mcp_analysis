@@ -1,5 +1,7 @@
 # metaQuantome Galaxy Tutorial
 
+[go back to the main page](../README.md)
+
 ## Accessing the Metaproteomics Gateway
 
 Go to <https://z.umn.edu/metaproteomicsgateway>.  This website is one of the public Galaxy gateways hosted on Jetstream (<https://jetstream-cloud.org/>), a cloud-based resource for scientific computing and research. The Galaxy installation on this website is maintained by the Galaxy-P team at the University of Minnesota.
