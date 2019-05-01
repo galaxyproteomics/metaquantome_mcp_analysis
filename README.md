@@ -6,7 +6,7 @@ On this page, we provide further resources for 1) reproducing the analysis from 
 
 We have made two tutorials available:
 
-1. [Command line interface tutorial](cli_tutorial/supporting1_tutorial.md)
+1. [Command line interface tutorial](cli_tutorial/cli_tutorial.md)
 2. [Galaxy tutorial](galaxy_tutorial/tutorial.md)
 
 ## Analysis scripts
