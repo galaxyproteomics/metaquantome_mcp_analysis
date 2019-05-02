@@ -48,7 +48,7 @@ The rest of the tutorial will assume that you have the Conda environment activat
 The data
 ========
 
-metaQuantome takes 2-3 input files depending on the mode of analysis. In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above. In addition,
+metaQuantome takes 2-3 input files depending on the mode of analysis. In the case of functional analysis, metaQuantome takes in a functional annotation file and a file with peptide intensities. For taxonomic analysis, the peptide intensity file and a file with lowest common ancestor (LCA) peptide annotations. For function-taxonomy interaction analysis, metaQuantome takes in all three files above.
 
 In this tutorial, the data is from a previously published paper \[1\], and is downsampled in the interest of speed and simplicity - so, keep in mind that these results are by not necessarily representative. The purpose of this tutorial is to demonstrate the capabilities of metaQuantome, not to analyze the full dataset. We can see the beginning of each of the files below.
 
@@ -170,7 +170,7 @@ Granulicatella adiacens
 </tbody>
 </table>
 
-Here, the peptides are annotated with their lowest common ancestor as a NCBI taxonomy ID. Taxon names can also be used, but, unlike names, NCBI taxIDs are unambiguous and not affected by differences in capitalization or spelling errors. So, taxIDs are *highly* recommended.
+Here, the peptides are annotated with their lowest common ancestor as a NCBI taxonomy names. Unlike names, NCBI taxIDs are unambiguous and not affected by differences in capitalization or spelling errors. So, taxIDs are *highly* recommended.
 
 Peptide intensities
 -------------------
@@ -385,7 +385,7 @@ cat input_files/samples.tab
     NS  X737NS,X852NS,X867NS
     WS  X737WS,X852WS,X867WS
 
-The file must have the 'group<tab>colnames\` header, and cannot end with a newline. Moreover, it must be separated with 'hard' tabs rather than 'soft tabs', as must all files used by metaQuantome. On the other hand, the JSON option is simpler for a smaller number of samples. The JSON equivalent in this case is
+The file must have the 'group colnames\` header, and cannot end with a newline. Moreover, it must be separated with 'hard' tabs rather than 'soft tabs', as must all files used by metaQuantome - the easiest way to ensure this is to create the file in Excel or other spreadsheet software, and then export to a tab-separated file. On the other hand, the JSON option is simpler for a smaller number of samples. The JSON equivalent in this case is
 
     '{"NS": ["X733NS","X852NS","X866NS"], "WS": ["X733WS", "X852WS", "X866WS"]}'
 
@@ -843,7 +843,9 @@ NA
 </tbody>
 </table>
 
-Note that quantitative outputs are included (columns like "NS\_mean", which shows the log base 2 of the average intensity for that term), as well as information about the 'quality' of the annotations, like "X733NS\_n\_peptide", which shows the number of peptides that give evidence for each term. For example, 4 peptides were observed in sample X733NS that were annotated with the *Firmicutes* phylum or any of its children. These extra columns are included because they are used in `metaquantome filter`, and for the sake of transparency.
+(The software used to write this tutorial puts in the backslashes (`\`) in the column names - those aren't actually there in the file)
+
+Quantitative outputs are included (columns like "NS\_mean", which shows the log base 2 of the average intensity for that term), as well as information about the 'quality' of the annotations, like "X733NS\_n\_peptide", which shows the number of peptides that give evidence for each term. For example, 4 peptides were observed in sample X733NS that were annotated with the *Firmicutes* phylum or any of its children. These extra columns are included because they are used in `metaquantome filter`, and for the sake of transparency.
 
 Filter
 ------
@@ -865,9 +867,9 @@ metaquantome filter \
 
 Here, we're requiring that each term satisfy the following conditions:
 
--   Evidenced by at least 2 peptides in at least 1 sample of each group
--   Has 0 sample children or at least 2 sample children in at least 1 sample of each group (see paper for definition of sample children)
--   Was quantified in at least 3 samples of each group
+-   Evidenced by at least 1 peptide in at least 1 sample of each group
+-   Has 0 sample children (leaf) or at least 2 sample children in at least 1 sample of each group (see paper for definition of sample children)
+-   Was quantified in at least 2 samples of each group
 
 Let's look at the output:
 
