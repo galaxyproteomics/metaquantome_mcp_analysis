@@ -22,7 +22,7 @@ Tools in Galaxy can be run individually or as part of a *workflow*, which is a l
 
 ## Import data
 
-The data used are a downsampled version of data from Rudney, et al. *Microbiome* [doi:10.1186/s40168-015-0136-z](https://dx.doi.org/10.1186/s40168-015-0136-z), using 3 pairs and 1000 peptides (and, as such, these results are not representative of the full dataset). For more detail about the data, see the *MCP* manuscript associated with this tutorial.
+The data used are a downsampled version of data from Rudney, et al. *Microbiome* [doi:10.1186/s40168-015-0136-z](https://dx.doi.org/10.1186/s40168-015-0136-z), using 3 pairs and 1000 peptides (and, as such, these results are not representative of the full dataset). For more details about the data, see the *MCP* manuscript associated with this tutorial.
 
 
 ## Analysis 1: Most Abundant Taxa
