@@ -8,7 +8,7 @@ April 19, 2019
 Introduction
 ============
 
-This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is available [here](../galaxy_tutorial/tutorial.md).
+This tutorial accompanies the article Easterly et al., *Mol Cell Proteomics* 2019, and is designed to show how to use the metaQuantome command line interface. An introduction to the metaQuantome Galaxy tool interface is available [here](../galaxy_tutorial/galaxy_tutorial.md).
 
 Installing metaQuantome
 =======================
