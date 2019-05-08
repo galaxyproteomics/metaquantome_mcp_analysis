@@ -88,7 +88,7 @@ Note that there can be multiple GO terms (or no GO terms) annotated to a peptide
 preview_tab_file('input_files/tax.tab')
 ```
 
-Here, the peptides are annotated with their lowest common ancestor as a NCBI taxonomy names. Unlike names, NCBI taxIDs are unambiguous and not affected by differences in capitalization or spelling errors. So, taxIDs are *highly* recommended. 
+Here, the peptides are annotated with their lowest common ancestor as NCBI taxonomy names. Unlike names, NCBI taxIDs are unambiguous and not affected by differences in capitalization or spelling errors. So, taxIDs are *highly* recommended. 
 
 ## Peptide intensities
 
@@ -98,13 +98,13 @@ Here, the mass-spectrometer spectral intensities are provided for each peptide.
 preview_tab_file('input_files/int.tab')
 ```
 
-Note that missing data is here represented as `NA`. In general, metaQuantome treats `0`, `NA`, and `NaN` as missing data.
+Note that missing data is represented as `NA`. In general, metaQuantome treats `0`, `NA`, and `NaN` as missing data.
 
 Also, metaQuantome assumes that input data is untransformed and normalized - that is, the data should be on the original measurement scale (not log transformed or any other transformation), and it should be normalized by an appropriate method.
 
 # Databases
 
-metaQuantome has a separate module for downloading the necessary databases. Let's first get the helptext for the module and make sure everything is installed correctly:
+metaQuantome has a separate module for downloading the necessary databases. Let's first get the help text for the module and make sure everything is installed correctly:
 
 ```{bash echo=-1}
 source ~/miniconda3/bin/activate mqome
@@ -113,7 +113,7 @@ metaquantome db -h
 
 If you get any errors that suggest that there has been trouble installing the package, please post on <https://github.com/galaxyproteomics/metaquantome/issues>.
 
-Now, to actually download the databases, choose a folder - here, `data` - and run the following command:
+Now, to actually download the databases, choose a folder ‒ here, `data` - and run the following command:
 
 ```{bash echo=-1, results=FALSE, cache=FALSE}
 source ~/miniconda3/bin/activate mqome
@@ -121,7 +121,7 @@ mkdir -p ./data
 metaquantome db ncbi go --dir ./data
 ```
 
-As detailed in the manuscript, the are several questions that metaQuantome can be used to explore. Let's go through a few of these.
+As detailed in the manuscript, there are several questions that metaQuantome can be used to explore. Let's go through a few of these.
 
 # Most Abundant Taxa
 
@@ -290,7 +290,7 @@ metaquantome viz \
 
 # Differentially Abundant Functions
 
-Now, let's go through a differential abundance analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` -> `filter` -> `stat` -> `viz`.
+Now, let's go through a differential abundance analysis with metaQuantome. We'll do analysis on GO terms, and look for terms that are significantly different between the no sucrose (NS) and with sucrose (WS) samples. The workflow is similar, but we add another step (`stat`), so we do `expand` → `filter` → `stat` → `viz`.
 
 ## Expand
 
@@ -347,7 +347,7 @@ metaquantome stat \
 
 ## Viz
 
-The visualization provided by metaQuantome for differential abundance is a volcano plot, where the -log10 p value is plotted against the log2 fold change.
+The visualization provided by metaQuantome for differential abundance is a volcano plot, where the -log10 p-value is plotted against the log2 fold change.
 
 Here, we provide the name of the fold change column in the result from `stat`, and whether or not to reverse the fold change. Note that the fold change is automatically calculated by alphabetizing the two group names, so we may want to reverse the order (here, we want to know WS over NS rather than NS over WS).
 
@@ -408,7 +408,7 @@ metaquantome viz \
 
 # Function-Taxonomy Interaction
 
-In this analysis, we examine the contribution of each taxon to carbohydrate metabolism, which is denoted by the GO term GO:0005975, "carbohydrate metabolic process". Once again, the workflow is `expand` -> `filter`, but now we go straight to `viz` (testing is not recommended in function-taxonomy interaction mode).
+In this analysis, we examine the contribution of each taxon to carbohydrate metabolism, which is denoted by the GO term GO:0005975, "carbohydrate metabolic process". Once again, the workflow is `expand` → `filter`, but now we go straight to `viz` (testing is not recommended in function-taxonomy interaction mode).
 
 ## Expand
 
@@ -452,7 +452,7 @@ metaquantome filter \
 
 ## Viz
 
-Finally, we visualize the results. Many vizualizations can be made from the same `filter` result file, including looking at taxonomic distribution of a functional term (`--whichway t_dist`) and looking at the functional distribution for a taxon (`--whichway f_dist`). In addition, for `t_dist` we need to provide the `--target_rank`; that is, the rank for which we're interested in the distribution. Here, the target rank is genus.
+Finally, we visualize the results. Many visualizations can be made from the same `filter` result file, including looking at the taxonomic distribution of a functional term (`--whichway t_dist`) and looking at the functional distribution for a taxon (`--whichway f_dist`). In addition, for `t_dist` we need to provide the `--target_rank`; that is, the rank for which we're interested in the distribution. Here, the target rank is genus.
 
 ```{bash results="hide",echo=-1}
 source ~/miniconda3/bin/activate mqome
