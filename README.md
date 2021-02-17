@@ -16,7 +16,7 @@ All of the analyses from the manuscript may be reproduced by cloning the [GitHub
 To reproduce the analyses, you can install metaQuantome v1.0.0 into a conda environment (called `mqome` in this repository) with the following command:
 
 ```
-conda create -n mqome metaquantome=1.0.0
+conda create -n mqome metaquantome=2.0.1
 ```
 
 Then each of the analysis scripts can be run (`run_all.sh` in the root directory of the repo).
