@@ -13,7 +13,7 @@ We have made two tutorials available:
 
 All of the analyses from the manuscript may be reproduced by cloning the [GitHub repository](https://github.com/galaxyproteomics/metaquantome_mcp_analysis).
 
-To reproduce the analyses, you can install metaQuantome v1.0.0 into a conda environment (called `mqome` in this repository) with the following command:
+To reproduce the analyses, you can install metaQuantome v2.0.1 into a conda environment (called `mqome` in this repository) with the following command:
 
 ```
 conda create -n mqome metaquantome=2.0.1
